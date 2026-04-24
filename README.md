@@ -98,15 +98,15 @@ Open `index.html` and find the `CONFIG` object near the top of the `<script>` ta
 ```js
 const CONFIG = {
   /* ── Names ── */
-  herName: "Sofia", // ← her name
-  yourName: "Marco", // ← your name
+  herName: "Erica Joy", // ← her name
+  yourName: "Klein", // ← your name
 
   /* ── Relationship start date ── */
-  startDate: "2024-10-24", // ← YYYY-MM-DD format
+  startDate: "2025-01-24", // ← YYYY-MM-DD format
 
   /* ── Music ── */
   music: {
-    file: "song.mp3", // ← your audio filename
+    file: "music.mp3", // ← your audio filename
     title: "Perfect — Ed Sheeran", // ← shown in the music modal
   },
 
