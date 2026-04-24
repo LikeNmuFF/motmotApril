@@ -752,22 +752,15 @@
 <body>
 
 <!-- ══ MUSIC MODAL ══ -->
-<!--
-  HOW TO ADD YOUR SONG:
-  Replace "song.mp3" below with your actual audio filename.
-  Put the mp3 file in the same folder as this HTML file.
-  Supports .mp3, .ogg, .wav
--->
-<audio id="bg-music" loop>
-  <source src="music.mp3" type="audio/mpeg">
-</audio>
+<!-- audio src is set by CONFIG in the script below -->
+<audio id="bg-music" loop><source id="bg-music-src" src="" type="audio/mpeg"></audio>
 
 <div class="music-modal-overlay" id="music-modal">
   <div class="music-modal">
     <span class="music-modal-note">🎵</span>
     <h2 class="music-modal-title">A song for you</h2>
     <p class="music-modal-sub">Would you like to play music<br>while you read this?</p>
-    <p class="music-modal-song">♪ Replace with your song title ♪</p>
+    <p class="music-modal-song" id="modal-song-title">♪ ♪</p>
     <div class="music-modal-buttons">
       <button class="music-btn-yes" onclick="startMusic()">♥ Yes, please</button>
       <button class="music-btn-no"  onclick="skipMusic()">Maybe later</button>
@@ -785,8 +778,8 @@
 <!-- ══ HERO ══ -->
 <section class="hero">
   <p class="hero-ornament">✦ A special day ✦</p>
-  <h1 class="hero-title">Happy Monthsary Love,</h1>
-  <h2 class="hero-name">Erica Joy 🌸</h2>
+  <h1 class="hero-title">Happy Monthsary,</h1>
+  <h2 class="hero-name"></h2>
   <div class="hero-divider">
     <span></span>
     <span class="hero-heart">♥</span>
@@ -801,59 +794,11 @@
   </div>
 </section>
 
-<!-- ══ GALLERY ══ -->
-<!--
-  HOW TO ADD YOUR PHOTOS:
-  1. Put your image files in the same folder as this HTML file.
-  2. Replace "photo1.jpg", "photo2.jpg" etc. with your actual filenames.
-  3. Edit the data-caption text to add a sweet memory or date for each photo.
-  4. To add more tiles, duplicate a <div class="gallery-item"> block.
-  5. To remove a tile, delete the whole <div class="gallery-item"> block.
--->
+<!-- ══ GALLERY ══  (tiles are built from CONFIG in the script) -->
 <section class="gallery-section reveal">
   <p class="section-label">✦ Our Memories ✦</p>
   <h3 class="gallery-subtitle">moments I treasure</h3>
-
-  <div class="gallery-grid" id="gallery-grid">
-
-    <!-- PHOTO 1 — large hero tile (2 cols × 2 rows) -->
-    <div class="gallery-item" data-caption="The day it all began 🌸" onclick="openLightbox(0)">
-      <img src="photo1.jpg" alt="Us together" onerror="this.parentElement.classList.add('empty'); this.remove(); this.parentElement.innerHTML='<div class=\'g-empty-icon\'>🌸</div><div class=\'g-empty-text\'>photo1.jpg</div>'">
-      <div class="g-caption">The day it all began 🌸</div>
-    </div>
-
-    <!-- PHOTO 2 -->
-    <div class="gallery-item" data-caption="Always smiling with you 💕" onclick="openLightbox(1)">
-      <img src="photo2.png" alt="Our memory" onerror="this.parentElement.classList.add('empty'); this.remove(); this.parentElement.innerHTML='<div class=\'g-empty-icon\'>💕</div><div class=\'g-empty-text\'>photo2.jpg</div>'">
-      <div class="g-caption">Always smiling with you 💕</div>
-    </div>
-
-    <!-- PHOTO 3 -->
-    <div class="gallery-item" data-caption="Favourite place 🌙" onclick="openLightbox(2)">
-      <img src="photo3.jpg" alt="Our memory" onerror="this.parentElement.classList.add('empty'); this.remove(); this.parentElement.innerHTML='<div class=\'g-empty-icon\'>🌙</div><div class=\'g-empty-text\'>photo3.jpg</div>'">
-      <div class="g-caption">Favourite place 🌙</div>
-    </div>
-
-    <!-- PHOTO 4 — tall tile (1 col × 2 rows) -->
-    <div class="gallery-item" data-caption="Just us ♥" onclick="openLightbox(3)">
-      <img src="photo4.jpg" alt="Our memory" onerror="this.parentElement.classList.add('empty'); this.remove(); this.parentElement.innerHTML='<div class=\'g-empty-icon\'>♥</div><div class=\'g-empty-text\'>photo4.jpg</div>'">
-      <div class="g-caption">Just us ♥</div>
-    </div>
-
-    <!-- PHOTO 5 -->
-    <div class="gallery-item" data-caption="Pure happiness 🌺" onclick="openLightbox(4)">
-      <img src="photo5.jpg" alt="Our memory" onerror="this.parentElement.classList.add('empty'); this.remove(); this.parentElement.innerHTML='<div class=\'g-empty-icon\'>🌺</div><div class=\'g-empty-text\'>photo5.jpg</div>'">
-      <div class="g-caption">Pure happiness 🌺</div>
-    </div>
-
-    <!-- PHOTO 6 — wide tile (2 cols × 1 row) -->
-    <div class="gallery-item" data-caption="My favourite view 🌅" onclick="openLightbox(5)">
-      <img src="photo6.jpg" alt="Our memory" onerror="this.parentElement.classList.add('empty'); this.remove(); this.parentElement.innerHTML='<div class=\'g-empty-icon\'>🌅</div><div class=\'g-empty-text\'>photo6.jpg</div>'">
-      <div class="g-caption">My favourite view 🌅</div>
-    </div>
-
-  </div>
-
+  <div class="gallery-grid" id="gallery-grid"></div>
   <p class="gallery-note">✦ Click any photo to view it larger ✦</p>
 </section>
 
@@ -890,7 +835,7 @@
   </div>
 
   <blockquote class="message-paragraph">
-    From the very first moment, something about you felt like home. Every day since, I've only fallen deeper. You are patient, warm, funny in the quietest ways, and endlessly lovely. I don't take a single day of this for granted — not one smile, not one late-night conversation. Here's to everything we've shared so far, and to everything still ahead of us. I'm so glad it's you.
+    From the very first moment, something about you felt like home. Every day since, I've only fallen deeper. You are patient, warm, funny in the quietest ways, and endlessly lovely. I don't take a single day of this for granted not one smile, not one late-night conversation. Here's to everything we've shared so far, and to everything still ahead of us. I'm so glad it's you.
   </blockquote>
 </section>
 
@@ -907,24 +852,100 @@
 <!-- ══ FOOTER ══ -->
 <footer class="reveal">
   <p class="footer-quote">"I have found the one whom my soul loves."<br><em>— Song of Solomon 3:4</em></p>
-  <p class="footer-sign">Yours forever, Klyjj</p>
+  <p class="footer-sign"></p>
   <p class="footer-sub">With all my heart · Always</p>
   <p class="footer-hearts">♥ ♥ ♥</p>
 </footer>
 
 <script>
-/* ── DATE & MONTHS ── */
+/* ╔══════════════════════════════════════════════════════════════╗
+   ║                  ★  YOUR PERSONAL CONFIG  ★                 ║
+   ║  This is the only section you need to edit.                 ║
+   ║  Everything else updates automatically.                     ║
+   ╚══════════════════════════════════════════════════════════════╝ */
+
+const CONFIG = {
+
+  /* ── Names ─────────────────────────────────────────────────── */
+  herName:   "Erica Joy",       // e.g. "Sofia"
+  yourName:  "Klyjj",      // e.g. "Marco"
+
+  /* ── Relationship start date ────────────────────────────────── */
+  startDate: "2024-12-24",       // format: YYYY-MM-DD
+
+  /* ── Music ──────────────────────────────────────────────────── */
+  music: {
+    file:  "music.mp3",           // filename (put it in the same folder)
+    title: "Our Song",           // shown in the music modal, e.g. "Perfect — Ed Sheeran"
+  },
+
+  /* ── Gallery photos ─────────────────────────────────────────── */
+  // Add as many photos as you like. Remove any you don't need.
+  // Put all image files in the same folder as this HTML file.
+  // caption = the text shown on hover and in the lightbox.
+  photos: [
+    { file: "photo1.jpg", caption: "The day it all began 🌸" },
+    { file: "photo2.png", caption: "Always smiling with you 💕" },
+    { file: "photo3.jpg", caption: "Favourite place 🌙"        },
+    { file: "photo4.jpg", caption: "Just us ♥"                 },
+    { file: "photo5.jpg", caption: "Pure happiness 🌺"         },
+    { file: "photo6.jpg", caption: "My favourite view 🌅"      },
+    // { file: "photo7.jpg", caption: "Add more by uncommenting!" },
+  ],
+
+};
+
+/* ══════════════════════════════════════════════════════════════ */
+/*  ↓↓  Don't need to edit anything below this line  ↓↓         */
+/* ══════════════════════════════════════════════════════════════ */
+
+/* ── Apply names ── */
+document.querySelectorAll('.hero-name').forEach(el => {
+  el.textContent = CONFIG.herName + ' 🌸';
+});
+document.querySelectorAll('.footer-sign').forEach(el => {
+  el.textContent = 'Yours forever, ' + CONFIG.yourName;
+});
+
+/* ── Apply music ── */
+document.getElementById('bg-music-src').src = CONFIG.music.file;
+document.getElementById('bg-music').load();
+document.getElementById('modal-song-title').textContent = '♪ ' + CONFIG.music.title + ' ♪';
+
+/* ── Build gallery from CONFIG.photos ── */
+(function () {
+  const grid = document.getElementById('gallery-grid');
+  const emojis = ['🌸','💕','🌙','♥','🌺','🌅','💗','✨','🌼','💖'];
+  CONFIG.photos.forEach((photo, i) => {
+    const item = document.createElement('div');
+    item.className = 'gallery-item';
+    item.dataset.caption = photo.caption;
+    item.setAttribute('onclick', `openLightbox(${i})`);
+    const fallbackEmoji = emojis[i % emojis.length];
+    item.innerHTML = `
+      <img src="${photo.file}" alt="Memory ${i+1}"
+           onerror="this.parentElement.classList.add('empty');
+                    this.remove();
+                    this.parentElement.removeAttribute('onclick');
+                    this.parentElement.innerHTML='<div class=\'g-empty-icon\'>${fallbackEmoji}</div><div class=\'g-empty-text\'>${photo.file}</div>'">
+      <div class="g-caption">${photo.caption}</div>
+    `;
+    grid.appendChild(item);
+  });
+})();
+
+
+/* ── DATE & MONTHS (uses CONFIG.startDate) ── */
 (function () {
   const today = new Date();
-  const months = [
+  const monthNames = [
     "January","February","March","April","May","June",
     "July","August","September","October","November","December"
   ];
   document.getElementById('hero-date').textContent =
-    `${months[today.getMonth()]} ${today.getDate()}, ${today.getFullYear()}`;
+    `${monthNames[today.getMonth()]} ${today.getDate()}, ${today.getFullYear()}`;
 
-  // Edit START_DATE to the anniversary start date, e.g. new Date('2024-10-24')
-  const START_DATE = new Date('2024-12-24');
+  const START_DATE = new Date(CONFIG.startDate);
   let diff = (today - START_DATE) / (1000 * 60 * 60 * 24 * 30.44);
   let count = Math.floor(diff);
   if (count < 1) count = 1;
