@@ -1,0 +1,1140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy Monthsary 💕</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Sacramento&family=Jost:wght@200;300;400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --rose: #c9617a;
+    --rose-light: #e8a0b0;
+    --rose-pale: #fce8ee;
+    --gold: #c9a96e;
+    --gold-light: #e8d5b0;
+    --cream: #fdf6f0;
+    --blush: #f5d0d8;
+    --deep: #5c1a2e;
+    --text: #3a1520;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Jost', sans-serif;
+    background: var(--cream);
+    color: var(--text);
+    overflow-x: hidden;
+    cursor: default;
+  }
+
+  /* ── Petals canvas ── */
+  #petal-canvas {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* ── Decorative noise overlay ── */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 1;
+    opacity: 0.4;
+  }
+
+  section { position: relative; z-index: 2; }
+
+  /* ══════════════ HERO ══════════════ */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 3rem 1.5rem;
+    background:
+      radial-gradient(ellipse 80% 60% at 50% 0%, #fce0e8 0%, transparent 70%),
+      radial-gradient(ellipse 60% 40% at 80% 80%, #f8d6b8 0%, transparent 60%),
+      var(--cream);
+  }
+
+  .hero-ornament {
+    font-size: 1.1rem;
+    letter-spacing: 0.45em;
+    text-transform: uppercase;
+    color: var(--gold);
+    font-weight: 200;
+    margin-bottom: 1.5rem;
+    opacity: 0;
+    animation: fadeUp 1s 0.3s forwards;
+  }
+
+  .hero-title {
+    font-family: 'Sacramento', cursive;
+    font-size: clamp(3.5rem, 10vw, 7rem);
+    color: var(--rose);
+    line-height: 1.1;
+    opacity: 0;
+    animation: fadeUp 1.1s 0.6s forwards;
+    text-shadow: 0 2px 30px rgba(201,97,122,0.2);
+  }
+
+  .hero-name {
+    font-family: 'Sacramento', cursive;
+    font-size: clamp(2.5rem, 8vw, 5.5rem);
+    color: var(--deep);
+    opacity: 0;
+    animation: fadeUp 1.1s 0.9s forwards;
+    margin-top: -0.3rem;
+  }
+
+  .hero-divider {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin: 1.8rem 0;
+    opacity: 0;
+    animation: fadeUp 1s 1.1s forwards;
+  }
+
+  .hero-divider span {
+    width: 80px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold-light));
+  }
+  .hero-divider span:last-child {
+    background: linear-gradient(90deg, var(--gold-light), transparent);
+  }
+
+  .hero-heart { font-size: 1.3rem; color: var(--rose); animation: heartbeat 2s infinite; }
+
+  .months-badge {
+    display: inline-block;
+    padding: 0.7rem 2.2rem;
+    border: 1px solid var(--rose-light);
+    border-radius: 100px;
+    font-size: clamp(0.85rem, 2.5vw, 1rem);
+    font-weight: 300;
+    letter-spacing: 0.2em;
+    color: var(--rose);
+    background: rgba(255,255,255,0.6);
+    backdrop-filter: blur(8px);
+    opacity: 0;
+    animation: fadeUp 1s 1.3s forwards;
+    margin-bottom: 0.5rem;
+  }
+
+  .hero-date {
+    font-size: 0.8rem;
+    letter-spacing: 0.3em;
+    color: var(--gold);
+    font-weight: 200;
+    opacity: 0;
+    animation: fadeUp 1s 1.5s forwards;
+    text-transform: uppercase;
+  }
+
+  .scroll-hint {
+    position: absolute;
+    bottom: 2.5rem;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.4rem;
+    color: var(--rose-light);
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    opacity: 0;
+    animation: fadeUp 1s 2.2s forwards;
+  }
+  .scroll-line {
+    width: 1px;
+    height: 40px;
+    background: linear-gradient(to bottom, var(--rose-light), transparent);
+    animation: scrollDrop 2s infinite;
+  }
+
+  /* ══════════════ GALLERY ══════════════ */
+  .gallery-section {
+    padding: 5rem 1.5rem 4rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: linear-gradient(180deg, var(--cream) 0%, #fff5f7 50%, var(--cream) 100%);
+  }
+
+  .section-label {
+    font-size: 0.7rem;
+    letter-spacing: 0.45em;
+    text-transform: uppercase;
+    color: var(--gold);
+    font-weight: 300;
+    margin-bottom: 0.6rem;
+  }
+
+  .gallery-subtitle {
+    font-family: 'Sacramento', cursive;
+    font-size: clamp(2rem, 5vw, 3rem);
+    color: var(--rose);
+    margin-bottom: 3rem;
+    line-height: 1.2;
+  }
+
+  /* ── Masonry-style grid ── */
+  .gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-auto-rows: 200px;
+    gap: 10px;
+    width: min(900px, 96vw);
+  }
+
+  /* First photo — large hero tile spanning 2 cols × 2 rows */
+  .gallery-item:nth-child(1) {
+    grid-column: span 2;
+    grid-row: span 2;
+  }
+  /* Tall tile */
+  .gallery-item:nth-child(4) {
+    grid-row: span 2;
+  }
+  /* Wide tile */
+  .gallery-item:nth-child(6) {
+    grid-column: span 2;
+  }
+
+  .gallery-item {
+    position: relative;
+    overflow: hidden;
+    border-radius: 3px;
+    background: linear-gradient(135deg, #fde8f0, #fce0d8);
+    cursor: pointer;
+  }
+
+  .gallery-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.5s cubic-bezier(0.25,0.46,0.45,0.94);
+  }
+
+  .gallery-item:hover img { transform: scale(1.06); }
+
+  /* Caption overlay on hover */
+  .gallery-item .g-caption {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    padding: 1rem 0.9rem 0.8rem;
+    background: linear-gradient(transparent, rgba(92,26,46,0.55));
+    color: white;
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 0.9rem;
+    font-weight: 300;
+    letter-spacing: 0.04em;
+    opacity: 0;
+    transform: translateY(6px);
+    transition: opacity 0.35s, transform 0.35s;
+  }
+
+  .gallery-item:hover .g-caption {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* Placeholder for empty slots */
+  .gallery-item.empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    border: 1.5px dashed var(--rose-light);
+    background: rgba(255,255,255,0.4);
+    cursor: default;
+  }
+
+  .gallery-item.empty .g-empty-icon { font-size: 2rem; opacity: 0.4; }
+  .gallery-item.empty .g-empty-text {
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--rose-light);
+    font-weight: 300;
+  }
+
+  /* ── Lightbox ── */
+  .lightbox {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(60,10,20,0.88);
+    z-index: 1000;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(6px);
+    padding: 1rem;
+  }
+  .lightbox.open { display: flex; }
+
+  .lightbox-img {
+    max-width: min(800px, 92vw);
+    max-height: 88vh;
+    object-fit: contain;
+    border-radius: 3px;
+    box-shadow: 0 24px 80px rgba(0,0,0,0.5);
+    animation: lbIn 0.3s cubic-bezier(0.34,1.56,0.64,1);
+  }
+
+  @keyframes lbIn {
+    from { transform: scale(0.88); opacity: 0; }
+    to   { transform: scale(1);    opacity: 1; }
+  }
+
+  .lightbox-caption {
+    position: absolute;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 1rem;
+    color: rgba(255,255,255,0.75);
+    white-space: nowrap;
+  }
+
+  .lightbox-close {
+    position: absolute;
+    top: 1.2rem; right: 1.4rem;
+    background: none;
+    border: none;
+    color: rgba(255,255,255,0.6);
+    font-size: 1.6rem;
+    cursor: pointer;
+    line-height: 1;
+    transition: color 0.2s;
+  }
+  .lightbox-close:hover { color: white; }
+
+  /* ── Nav arrows ── */
+  .lb-arrow {
+    position: absolute;
+    top: 50%; transform: translateY(-50%);
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.2);
+    color: white;
+    width: 44px; height: 44px;
+    border-radius: 50%;
+    font-size: 1.2rem;
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    transition: background 0.2s;
+  }
+  .lb-arrow:hover { background: rgba(255,255,255,0.22); }
+  .lb-prev { left: 1rem; }
+  .lb-next { right: 1rem; }
+
+  .gallery-note {
+    margin-top: 2.5rem;
+    font-size: 0.72rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    font-weight: 300;
+    opacity: 0.7;
+  }
+
+  @media (max-width: 600px) {
+    .gallery-grid {
+      grid-template-columns: repeat(2, 1fr);
+      grid-auto-rows: 150px;
+    }
+    .gallery-item:nth-child(1) { grid-column: span 2; grid-row: span 1; }
+    .gallery-item:nth-child(4) { grid-row: span 1; }
+    .gallery-item:nth-child(6) { grid-column: span 2; }
+  }
+
+  /* ══════════════ MUSIC MODAL ══════════════ */
+  .music-modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(60,10,20,0.7);
+    backdrop-filter: blur(10px);
+    z-index: 2000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
+    animation: fadeIn 0.4s ease forwards;
+  }
+  @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+  .music-modal {
+    background: linear-gradient(145deg, #fdf0f4, #fff8f2);
+    border: 1px solid var(--blush);
+    border-radius: 6px;
+    padding: 3rem 2.5rem;
+    text-align: center;
+    max-width: 380px;
+    width: 100%;
+    box-shadow: 0 32px 80px rgba(92,26,46,0.25);
+    animation: modalIn 0.5s cubic-bezier(0.34,1.56,0.64,1) forwards;
+    position: relative;
+    overflow: hidden;
+  }
+  .music-modal::before {
+    content: '';
+    position: absolute;
+    top: -40px; left: -40px;
+    width: 160px; height: 160px;
+    background: radial-gradient(circle, rgba(232,160,176,0.3), transparent 70%);
+    pointer-events: none;
+  }
+  .music-modal::after {
+    content: '';
+    position: absolute;
+    bottom: -30px; right: -30px;
+    width: 120px; height: 120px;
+    background: radial-gradient(circle, rgba(201,169,110,0.2), transparent 70%);
+    pointer-events: none;
+  }
+  @keyframes modalIn {
+    from { opacity: 0; transform: scale(0.85) translateY(20px); }
+    to   { opacity: 1; transform: scale(1)    translateY(0); }
+  }
+
+  .music-modal-note {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    display: block;
+    animation: noteBounce 1.4s ease infinite;
+  }
+  @keyframes noteBounce {
+    0%, 100% { transform: translateY(0) rotate(-5deg); }
+    50%       { transform: translateY(-8px) rotate(5deg); }
+  }
+
+  .music-modal-title {
+    font-family: 'Sacramento', cursive;
+    font-size: 2.2rem;
+    color: var(--rose);
+    margin-bottom: 0.5rem;
+    line-height: 1.2;
+  }
+  .music-modal-sub {
+    font-size: 0.8rem;
+    font-weight: 300;
+    letter-spacing: 0.1em;
+    color: var(--text);
+    opacity: 0.6;
+    margin-bottom: 0.4rem;
+  }
+  .music-modal-song {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 0.95rem;
+    color: var(--rose);
+    margin-bottom: 2rem;
+    opacity: 0.85;
+  }
+
+  .music-modal-buttons {
+    display: flex;
+    gap: 0.8rem;
+    justify-content: center;
+    position: relative;
+    z-index: 1;
+  }
+  .music-btn-yes {
+    flex: 1;
+    padding: 0.85rem 1rem;
+    background: linear-gradient(135deg, var(--rose), #a84060);
+    color: white;
+    border: none;
+    border-radius: 100px;
+    font-family: 'Jost', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 300;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    cursor: pointer;
+    box-shadow: 0 8px 24px rgba(201,97,122,0.35);
+    transition: all 0.3s cubic-bezier(0.34,1.56,0.64,1);
+  }
+  .music-btn-yes:hover { transform: translateY(-2px) scale(1.04); box-shadow: 0 12px 32px rgba(201,97,122,0.45); }
+  .music-btn-no {
+    flex: 1;
+    padding: 0.85rem 1rem;
+    background: transparent;
+    color: var(--rose);
+    border: 1px solid var(--rose-light);
+    border-radius: 100px;
+    font-family: 'Jost', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 300;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  .music-btn-no:hover { background: rgba(201,97,122,0.06); border-color: var(--rose); }
+
+  /* ── Floating music toggle ── */
+  .music-toggle {
+    position: fixed;
+    bottom: 1.6rem;
+    right: 1.6rem;
+    width: 46px; height: 46px;
+    background: rgba(255,255,255,0.85);
+    border: 1px solid var(--rose-light);
+    border-radius: 50%;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    cursor: pointer;
+    z-index: 500;
+    box-shadow: 0 4px 16px rgba(201,97,122,0.2);
+    backdrop-filter: blur(8px);
+    transition: transform 0.3s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.3s;
+  }
+  .music-toggle:hover { transform: scale(1.12); box-shadow: 0 8px 24px rgba(201,97,122,0.3); }
+  .music-toggle.show { display: flex; }
+  .music-toggle.playing .spin { animation: spinNote 3s linear infinite; }
+  @keyframes spinNote { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+
+  /* ══════════════ LOVE MESSAGE ══════════════ */
+  .message-section {
+    padding: 5rem 1.5rem;
+    max-width: 760px;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .message-heading {
+    font-family: 'Sacramento', cursive;
+    font-size: clamp(2.5rem, 7vw, 4rem);
+    color: var(--rose);
+    margin-bottom: 2.5rem;
+    line-height: 1.2;
+  }
+
+  .reasons-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1.2rem;
+    margin-bottom: 3rem;
+  }
+
+  .reason-card {
+    background: rgba(255,255,255,0.7);
+    border: 1px solid var(--blush);
+    border-radius: 2px;
+    padding: 1.6rem 1.4rem;
+    text-align: left;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    backdrop-filter: blur(4px);
+  }
+
+  .reason-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 32px rgba(201,97,122,0.12);
+  }
+
+  .reason-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2rem;
+    color: var(--rose-light);
+    font-weight: 300;
+    line-height: 1;
+    margin-bottom: 0.5rem;
+  }
+
+  .reason-text {
+    font-size: 0.9rem;
+    font-weight: 300;
+    line-height: 1.7;
+    color: var(--text);
+  }
+
+  .message-paragraph {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1.1rem, 3vw, 1.4rem);
+    font-style: italic;
+    font-weight: 300;
+    line-height: 1.9;
+    color: var(--deep);
+    padding: 2rem 1.5rem;
+    border-left: 2px solid var(--rose-light);
+    text-align: left;
+    background: rgba(255,255,255,0.5);
+    border-radius: 0 4px 4px 0;
+  }
+
+  /* ══════════════ INTERACTIVE ══════════════ */
+  .kiss-section {
+    padding: 5rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    background:
+      radial-gradient(ellipse 70% 50% at 50% 50%, rgba(232,160,176,0.15) 0%, transparent 70%),
+      var(--cream);
+  }
+
+  .kiss-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.8rem;
+    padding: 1rem 2.8rem;
+    background: linear-gradient(135deg, var(--rose), #a84060);
+    color: white;
+    border: none;
+    border-radius: 100px;
+    font-family: 'Jost', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 300;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.34,1.56,0.64,1);
+    box-shadow: 0 8px 32px rgba(201,97,122,0.35);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .kiss-btn::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(255,255,255,0.2), transparent);
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+
+  .kiss-btn:hover {
+    transform: scale(1.06) translateY(-2px);
+    box-shadow: 0 16px 40px rgba(201,97,122,0.45);
+  }
+  .kiss-btn:hover::before { opacity: 1; }
+  .kiss-btn:active { transform: scale(0.97); }
+
+  .kiss-response {
+    margin-top: 2rem;
+    font-family: 'Sacramento', cursive;
+    font-size: 2.2rem;
+    color: var(--rose);
+    min-height: 3rem;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: all 0.5s cubic-bezier(0.34,1.56,0.64,1);
+  }
+
+  .kiss-response.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* ══════════════ FOOTER ══════════════ */
+  footer {
+    padding: 5rem 1.5rem 4rem;
+    text-align: center;
+    background: linear-gradient(180deg, var(--cream) 0%, #fce8ee 100%);
+    position: relative;
+  }
+
+  .footer-quote {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: clamp(1rem, 3vw, 1.3rem);
+    font-weight: 300;
+    color: var(--text);
+    opacity: 0.7;
+    max-width: 500px;
+    margin: 0 auto 2.5rem;
+    line-height: 1.8;
+  }
+
+  .footer-sign {
+    font-family: 'Sacramento', cursive;
+    font-size: clamp(1.8rem, 5vw, 2.8rem);
+    color: var(--rose);
+  }
+
+  .footer-sub {
+    font-size: 0.7rem;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--gold);
+    font-weight: 200;
+    margin-top: 0.5rem;
+  }
+
+  .footer-hearts {
+    margin-top: 2.5rem;
+    font-size: 1.2rem;
+    letter-spacing: 0.5rem;
+    opacity: 0.4;
+  }
+
+  /* ══════════════ ANIMATIONS ══════════════ */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes heartbeat {
+    0%, 100% { transform: scale(1); }
+    14%       { transform: scale(1.2); }
+    28%       { transform: scale(1); }
+    42%       { transform: scale(1.15); }
+    56%       { transform: scale(1); }
+  }
+
+  @keyframes scrollDrop {
+    0%   { transform: scaleY(0); transform-origin: top; opacity: 1; }
+    50%  { transform: scaleY(1); transform-origin: top; opacity: 1; }
+    51%  { transform: scaleY(1); transform-origin: bottom; opacity: 1; }
+    100% { transform: scaleY(0); transform-origin: bottom; opacity: 0; }
+  }
+
+  @keyframes floatHeart {
+    0%   { transform: translateY(0) rotate(var(--r, 0deg)) scale(1); opacity: 1; }
+    100% { transform: translateY(-120px) rotate(var(--r2, 20deg)) scale(0.3); opacity: 0; }
+  }
+
+  /* ══════════════ CONFETTI ══════════════ */
+  .confetti-piece {
+    position: fixed;
+    width: 8px;
+    height: 8px;
+    pointer-events: none;
+    z-index: 999;
+    animation: confettiFall linear forwards;
+    border-radius: 2px;
+  }
+
+  @keyframes confettiFall {
+    0%   { transform: translateY(-20px) rotate(0deg); opacity: 1; }
+    80%  { opacity: 1; }
+    100% { transform: translateY(110vh) rotate(720deg); opacity: 0; }
+  }
+
+  /* ══════════════ SCROLL REVEAL ══════════════ */
+  .reveal {
+    opacity: 0;
+    transform: translateY(32px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+  .reveal.in { opacity: 1; transform: translateY(0); }
+
+  /* ══════════════ MOBILE ══════════════ */
+  @media (max-width: 480px) {
+    .reasons-grid { grid-template-columns: 1fr; }
+    .message-paragraph { font-size: 1.05rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ══ MUSIC MODAL ══ -->
+<!--
+  HOW TO ADD YOUR SONG:
+  Replace "song.mp3" below with your actual audio filename.
+  Put the mp3 file in the same folder as this HTML file.
+  Supports .mp3, .ogg, .wav
+-->
+<audio id="bg-music" loop>
+  <source src="music.mp3" type="audio/mpeg">
+</audio>
+
+<div class="music-modal-overlay" id="music-modal">
+  <div class="music-modal">
+    <span class="music-modal-note">🎵</span>
+    <h2 class="music-modal-title">A song for you</h2>
+    <p class="music-modal-sub">Would you like to play music<br>while you read this?</p>
+    <p class="music-modal-song">♪ Replace with your song title ♪</p>
+    <div class="music-modal-buttons">
+      <button class="music-btn-yes" onclick="startMusic()">♥ Yes, please</button>
+      <button class="music-btn-no"  onclick="skipMusic()">Maybe later</button>
+    </div>
+  </div>
+</div>
+
+<!-- ── Floating music toggle (shown after modal is dismissed) ── -->
+<button class="music-toggle" id="music-toggle" onclick="toggleMusic()" title="Toggle music">
+  <span class="spin">🎵</span>
+</button>
+
+<canvas id="petal-canvas"></canvas>
+
+<!-- ══ HERO ══ -->
+<section class="hero">
+  <p class="hero-ornament">✦ A special day ✦</p>
+  <h1 class="hero-title">Happy Monthsary Love,</h1>
+  <h2 class="hero-name">Erica Joy 🌸</h2>
+  <div class="hero-divider">
+    <span></span>
+    <span class="hero-heart">♥</span>
+    <span></span>
+  </div>
+  <div class="months-badge" id="months-badge">— Loading —</div>
+  <p class="hero-date" id="hero-date">—</p>
+
+  <div class="scroll-hint">
+    <span>Scroll</span>
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<!-- ══ GALLERY ══ -->
+<!--
+  HOW TO ADD YOUR PHOTOS:
+  1. Put your image files in the same folder as this HTML file.
+  2. Replace "photo1.jpg", "photo2.jpg" etc. with your actual filenames.
+  3. Edit the data-caption text to add a sweet memory or date for each photo.
+  4. To add more tiles, duplicate a <div class="gallery-item"> block.
+  5. To remove a tile, delete the whole <div class="gallery-item"> block.
+-->
+<section class="gallery-section reveal">
+  <p class="section-label">✦ Our Memories ✦</p>
+  <h3 class="gallery-subtitle">moments I treasure</h3>
+
+  <div class="gallery-grid" id="gallery-grid">
+
+    <!-- PHOTO 1 — large hero tile (2 cols × 2 rows) -->
+    <div class="gallery-item" data-caption="The day it all began 🌸" onclick="openLightbox(0)">
+      <img src="photo1.jpg" alt="Us together" onerror="this.parentElement.classList.add('empty'); this.remove(); this.parentElement.innerHTML='<div class=\'g-empty-icon\'>🌸</div><div class=\'g-empty-text\'>photo1.jpg</div>'">
+      <div class="g-caption">The day it all began 🌸</div>
+    </div>
+
+    <!-- PHOTO 2 -->
+    <div class="gallery-item" data-caption="Always smiling with you 💕" onclick="openLightbox(1)">
+      <img src="photo2.png" alt="Our memory" onerror="this.parentElement.classList.add('empty'); this.remove(); this.parentElement.innerHTML='<div class=\'g-empty-icon\'>💕</div><div class=\'g-empty-text\'>photo2.jpg</div>'">
+      <div class="g-caption">Always smiling with you 💕</div>
+    </div>
+
+    <!-- PHOTO 3 -->
+    <div class="gallery-item" data-caption="Favourite place 🌙" onclick="openLightbox(2)">
+      <img src="photo3.jpg" alt="Our memory" onerror="this.parentElement.classList.add('empty'); this.remove(); this.parentElement.innerHTML='<div class=\'g-empty-icon\'>🌙</div><div class=\'g-empty-text\'>photo3.jpg</div>'">
+      <div class="g-caption">Favourite place 🌙</div>
+    </div>
+
+    <!-- PHOTO 4 — tall tile (1 col × 2 rows) -->
+    <div class="gallery-item" data-caption="Just us ♥" onclick="openLightbox(3)">
+      <img src="photo4.jpg" alt="Our memory" onerror="this.parentElement.classList.add('empty'); this.remove(); this.parentElement.innerHTML='<div class=\'g-empty-icon\'>♥</div><div class=\'g-empty-text\'>photo4.jpg</div>'">
+      <div class="g-caption">Just us ♥</div>
+    </div>
+
+    <!-- PHOTO 5 -->
+    <div class="gallery-item" data-caption="Pure happiness 🌺" onclick="openLightbox(4)">
+      <img src="photo5.jpg" alt="Our memory" onerror="this.parentElement.classList.add('empty'); this.remove(); this.parentElement.innerHTML='<div class=\'g-empty-icon\'>🌺</div><div class=\'g-empty-text\'>photo5.jpg</div>'">
+      <div class="g-caption">Pure happiness 🌺</div>
+    </div>
+
+    <!-- PHOTO 6 — wide tile (2 cols × 1 row) -->
+    <div class="gallery-item" data-caption="My favourite view 🌅" onclick="openLightbox(5)">
+      <img src="photo6.jpg" alt="Our memory" onerror="this.parentElement.classList.add('empty'); this.remove(); this.parentElement.innerHTML='<div class=\'g-empty-icon\'>🌅</div><div class=\'g-empty-text\'>photo6.jpg</div>'">
+      <div class="g-caption">My favourite view 🌅</div>
+    </div>
+
+  </div>
+
+  <p class="gallery-note">✦ Click any photo to view it larger ✦</p>
+</section>
+
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox" onclick="closeLightbox(event)">
+  <button class="lightbox-close" onclick="closeLightbox()">✕</button>
+  <button class="lb-arrow lb-prev" onclick="event.stopPropagation(); shiftLightbox(-1)">‹</button>
+  <img class="lightbox-img" id="lightbox-img" src="" alt="">
+  <button class="lb-arrow lb-next" onclick="event.stopPropagation(); shiftLightbox(1)">›</button>
+  <div class="lightbox-caption" id="lightbox-caption"></div>
+</div>
+
+<!-- ══ LOVE MESSAGE ══ -->
+<section class="message-section reveal">
+  <h3 class="message-heading">Why I love you…</h3>
+
+  <div class="reasons-grid">
+    <div class="reason-card">
+      <div class="reason-num">01</div>
+      <p class="reason-text">Your laugh is the most beautiful sound in the world — it lights up every room you walk into.</p>
+    </div>
+    <div class="reason-card">
+      <div class="reason-num">02</div>
+      <p class="reason-text">You make the ordinary feel magical. A simple evening with you feels like the best day of my life.</p>
+    </div>
+    <div class="reason-card">
+      <div class="reason-num">03</div>
+      <p class="reason-text">Your kindness and the way you care for people you love — it's one of the things I admire most about you.</p>
+    </div>
+    <div class="reason-card">
+      <div class="reason-num">04</div>
+      <p class="reason-text">You push me to be better without ever making me feel less. That's a rare and beautiful gift.</p>
+    </div>
+  </div>
+
+  <blockquote class="message-paragraph">
+    From the very first moment, something about you felt like home. Every day since, I've only fallen deeper. You are patient, warm, funny in the quietest ways, and endlessly lovely. I don't take a single day of this for granted — not one smile, not one late-night conversation, not one ordinary Tuesday. Here's to everything we've shared so far, and to everything still ahead of us. I'm so glad it's you.
+  </blockquote>
+</section>
+
+<!-- ══ INTERACTIVE ══ -->
+<section class="kiss-section reveal">
+  <p class="section-label">✦ For you ✦</p>
+  <br>
+  <button class="kiss-btn" onclick="sendKiss(this)">
+    <span>💋</span> Send a Kiss
+  </button>
+  <div class="kiss-response" id="kiss-response">Caught it! 🌸</div>
+</section>
+
+<!-- ══ FOOTER ══ -->
+<footer class="reveal">
+  <p class="footer-quote">"I have found the one whom my soul loves."<br><em>— Song of Solomon 3:4</em></p>
+  <p class="footer-sign">Yours forever, Klyjj</p>
+  <p class="footer-sub">With all my heart · Always</p>
+  <p class="footer-hearts">♥ ♥ ♥</p>
+</footer>
+
+<script>
+/* ── DATE & MONTHS ── */
+(function () {
+  const today = new Date();
+  const months = [
+    "January","February","March","April","May","June",
+    "July","August","September","October","November","December"
+  ];
+  document.getElementById('hero-date').textContent =
+    `${months[today.getMonth()]} ${today.getDate()}, ${today.getFullYear()}`;
+
+  // Edit START_DATE to the anniversary start date, e.g. new Date('2024-10-24')
+  const START_DATE = new Date('2024-12-24');
+  let diff = (today - START_DATE) / (1000 * 60 * 60 * 24 * 30.44);
+  let count = Math.floor(diff);
+  if (count < 1) count = 1;
+  const label = count === 1 ? 'month' : 'months';
+  document.getElementById('months-badge').textContent = `${count} ${label} of love ♥`;
+})();
+
+/* ── PETAL CANVAS ── */
+(function () {
+  const canvas = document.getElementById('petal-canvas');
+  const ctx = canvas.getContext('2d');
+  let W, H, petals = [];
+
+  function resize() {
+    W = canvas.width  = window.innerWidth;
+    H = canvas.height = window.innerHeight;
+  }
+  resize();
+  window.addEventListener('resize', resize);
+
+  const colors = ['#e8a0b0','#f5c9d0','#c9617a','#f0b8c0','#e8c0a0'];
+
+  function spawnPetal() {
+    const size = 6 + Math.random() * 10;
+    return {
+      x: Math.random() * W,
+      y: -size,
+      size,
+      color: colors[Math.floor(Math.random() * colors.length)],
+      speed: 0.4 + Math.random() * 0.8,
+      drift: (Math.random() - 0.5) * 0.4,
+      rot: Math.random() * Math.PI * 2,
+      rotSpeed: (Math.random() - 0.5) * 0.03,
+      opacity: 0.3 + Math.random() * 0.4
+    };
+  }
+
+  for (let i = 0; i < 18; i++) {
+    const p = spawnPetal();
+    p.y = Math.random() * H;
+    petals.push(p);
+  }
+
+  function drawPetal(p) {
+    ctx.save();
+    ctx.translate(p.x, p.y);
+    ctx.rotate(p.rot);
+    ctx.globalAlpha = p.opacity;
+    ctx.fillStyle = p.color;
+    ctx.beginPath();
+    ctx.ellipse(0, 0, p.size * 0.5, p.size, 0, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.restore();
+  }
+
+  function loop() {
+    ctx.clearRect(0, 0, W, H);
+    petals.forEach(p => {
+      p.y += p.speed;
+      p.x += p.drift;
+      p.rot += p.rotSpeed;
+      if (p.y > H + 20) Object.assign(p, spawnPetal());
+      drawPetal(p);
+    });
+    if (petals.length < 25 && Math.random() < 0.02) petals.push(spawnPetal());
+    requestAnimationFrame(loop);
+  }
+  loop();
+})();
+
+/* ── CONFETTI BURST ── */
+function burst() {
+  const colors = ['#c9617a','#e8a0b0','#c9a96e','#f5c9d0','#a84060','#e8d5b0'];
+  for (let i = 0; i < 60; i++) {
+    const el = document.createElement('div');
+    el.classList.add('confetti-piece');
+    el.style.left = (20 + Math.random() * 60) + 'vw';
+    el.style.background = colors[Math.floor(Math.random() * colors.length)];
+    el.style.borderRadius = Math.random() > 0.5 ? '50%' : '2px';
+    el.style.animationDuration = (1.5 + Math.random() * 2) + 's';
+    el.style.animationDelay = (Math.random() * 0.8) + 's';
+    document.body.appendChild(el);
+    el.addEventListener('animationend', () => el.remove());
+  }
+}
+window.addEventListener('load', () => setTimeout(burst, 1800));
+
+/* ── SEND KISS ── */
+const kissMessages = [
+  "Caught it! 🌸", "Felt that! 💕", "Mwah! 💋",
+  "My heart fluttered~ 🌺", "Sending one right back! 💗",
+  "You're so sweet 🍓", "I love you! ♥"
+];
+let kissIdx = 0;
+function sendKiss(btn) {
+  const el = document.getElementById('kiss-response');
+  el.classList.remove('visible');
+  // float hearts from button
+  const rect = btn.getBoundingClientRect();
+  for (let i = 0; i < 8; i++) {
+    const h = document.createElement('div');
+    h.style.cssText = `
+      position:fixed;
+      left:${rect.left + rect.width/2}px;
+      top:${rect.top}px;
+      font-size:${1 + Math.random()}rem;
+      pointer-events:none;
+      z-index:999;
+      --r:${(Math.random()-0.5)*40}deg;
+      --r2:${(Math.random()-0.5)*60}deg;
+      animation: floatHeart ${0.8+Math.random()*0.8}s ${Math.random()*0.4}s forwards;
+    `;
+    h.textContent = ['💗','💕','♥','💓','🌸'][Math.floor(Math.random()*5)];
+    document.body.appendChild(h);
+    h.addEventListener('animationend', () => h.remove());
+  }
+  setTimeout(() => {
+    el.textContent = kissMessages[kissIdx % kissMessages.length];
+    kissIdx++;
+    el.classList.add('visible');
+  }, 200);
+}
+
+/* ── SCROLL REVEAL ── */
+const io = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); } });
+}, { threshold: 0.12 });
+document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+/* ── LIGHTBOX ── */
+let lbIndex = 0;
+function getGalleryItems() {
+  return [...document.querySelectorAll('.gallery-item:not(.empty)')];
+}
+function openLightbox(idx) {
+  const items = getGalleryItems();
+  if (!items[idx]) return;
+  lbIndex = idx;
+  const img = items[idx].querySelector('img');
+  const cap = items[idx].dataset.caption || '';
+  document.getElementById('lightbox-img').src = img ? img.src : '';
+  document.getElementById('lightbox-caption').textContent = cap;
+  document.getElementById('lightbox').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeLightbox(e) {
+  if (e && e.target !== document.getElementById('lightbox') && !e.target.classList.contains('lightbox-close')) return;
+  document.getElementById('lightbox').classList.remove('open');
+  document.body.style.overflow = '';
+}
+function shiftLightbox(dir) {
+  const items = getGalleryItems();
+  lbIndex = (lbIndex + dir + items.length) % items.length;
+  const img = items[lbIndex].querySelector('img');
+  const lbImg = document.getElementById('lightbox-img');
+  lbImg.style.opacity = 0;
+  setTimeout(() => {
+    lbImg.src = img ? img.src : '';
+    document.getElementById('lightbox-caption').textContent = items[lbIndex].dataset.caption || '';
+    lbImg.style.opacity = 1;
+  }, 150);
+}
+document.addEventListener('keydown', e => {
+  if (!document.getElementById('lightbox').classList.contains('open')) return;
+  if (e.key === 'ArrowRight') shiftLightbox(1);
+  if (e.key === 'ArrowLeft')  shiftLightbox(-1);
+  if (e.key === 'Escape')     { document.getElementById('lightbox').classList.remove('open'); document.body.style.overflow = ''; }
+});
+document.getElementById('lightbox-img').style.transition = 'opacity 0.15s';
+
+/* ── MUSIC ── */
+const audio   = document.getElementById('bg-music');
+const modal   = document.getElementById('music-modal');
+const toggle  = document.getElementById('music-toggle');
+
+function dismissModal() {
+  modal.style.transition = 'opacity 0.4s ease';
+  modal.style.opacity = '0';
+  setTimeout(() => { modal.style.display = 'none'; }, 400);
+  toggle.classList.add('show');
+}
+
+function startMusic() {
+  audio.volume = 0;
+  audio.play().then(() => {
+    // gentle fade-in
+    let v = 0;
+    const fade = setInterval(() => {
+      v = Math.min(v + 0.04, 0.6);
+      audio.volume = v;
+      if (v >= 0.6) clearInterval(fade);
+    }, 80);
+    toggle.classList.add('playing');
+  }).catch(() => {});
+  dismissModal();
+}
+
+function skipMusic() {
+  dismissModal();
+}
+
+function toggleMusic() {
+  if (audio.paused) {
+    audio.play().catch(() => {});
+    toggle.classList.add('playing');
+  } else {
+    audio.pause();
+    toggle.classList.remove('playing');
+  }
+}
+</script>
+</body>
+</html>
